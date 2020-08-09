@@ -8,6 +8,14 @@ struct node
   struct node *next;
 };
 
+struct list
+{
+  struct node lnode;
+  struct node *current;
+  struct node *head;
+  struct node *tail;
+};
+
 static struct node *insertFirstNode();
 static struct node *updateNode(struct node *arg, int data);
 static int printList(struct node *arg);
@@ -23,39 +31,38 @@ static int listSize = 0;
 int sizeOfNode = sizeof(struct node);
 
 int main()
-
 {
   int memArray[] = {1,2,3,4,5,6,7,8,9};
   int sizeOfMemArray = sizeof(memArray);
   int i;
+  struct list llist;
 
-  current = insertFirstNode();
-  head = current;
+  llist.current = insertFirstNode();
+  llist.head = llist.current;
   
   for (i = 0; i < sizeOfMemArray/sizeof(int); ++i)
   {
-    current = updateNode(current, memArray[i]);
+    llist.current = updateNode(llist.current, memArray[i]);
   }
 
-  getListSize(head, false);
+  getListSize(llist.head, false);
 
-  printList(head);
-  getListSize(head, true);
-  freeNode(head);
-  printList(head);
+  printList(llist.head);
+  getListSize(llist.head, true);
+  freeNode(llist.head);
+  printList(llist.head);
   
   /* free the list */
-  int size = getListSize(head, true);
+  int size = getListSize(llist.head, true);
   for (i = 0; i <= size; i++)
   {
-    freeNode(head);
+    freeNode(llist.head);
   }
-  printList(head);
+  printList(llist.head);
 
   return 0;
 
 }
-
 
 static struct node *insertFirstNode()
 {
