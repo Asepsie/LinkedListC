@@ -37,8 +37,6 @@ int main()
     current = updateNode(current, memArray[i]);
   }
 
-  tail = current;
-
   getListSize(head, false);
 
   printList(head);
@@ -98,6 +96,9 @@ static struct node *updateNode(struct node *arg, int data)
 
   listSize++;
 
+  // update tail with latest node
+  tail = temp;
+
   return temp;
 }
 
@@ -130,7 +131,13 @@ static int freeNode(struct node *arg)
   /* Check input */
   if(arg == NULL) return -1;
   
-  if(arg->next == NULL) printf("Whiskey Tango foxtrot\n");
+  if(arg->next == NULL)
+  {
+    printf("Whiskey Tango foxtrot\n");
+    // free the firs and last node of the list
+    free(arg);
+    return 0;
+  } 
 
   /* Walk the list */
   while(arg->next != NULL)
